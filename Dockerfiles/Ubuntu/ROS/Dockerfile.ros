@@ -43,10 +43,34 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /opt/ros_ws/src
 WORKDIR /opt/ros_ws
 RUN  . /opt/ros/noetic/setup.sh && \
-	catkin_make 		
+	catkin_make 
 
-# setup entrypoint
-COPY ./ros_entrypoint.sh /
-ENTRYPOINT ["/ros_entrypoint.sh"]
+RUN rm /etc/apt/sources.list.d/cuda.list
+# RUN rm /etc/apt/sources.list.d/nvidia-ml.list
+RUN apt-get update && apt-get install -y vim tmux \
+    tmux \
+    build-essential \
+    git \
+    vim \
+    python3-tk \
+    gnupg \
+    build-essential \
+    tzdata \
+    python3-rosinstall \
+    python3-rosdep \
+    python3-rosinstall-generator \
+    python3-wstool \
+    nano \
+    python3-pip \
+    apt-utils \
+    python3-catkin-tools \
+    bopencv3.2-* \
+    libusb-* \
+    python3-colcon-common-extensions \
+    ros-noetic-rosbridge-server 
+
+# # setup entrypoint
+# COPY ./ros_entrypoint.sh /
+# ENTRYPOINT ["/ros_entrypoint.sh"]
 
 CMD ["bash"]
