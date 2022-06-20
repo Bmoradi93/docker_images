@@ -9,7 +9,7 @@ touch $XAUTH
 xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
 
 # Running the container
-docker run --runtime=nvidia --privileged --rm -itd -u root --gpus all -v /dev:/dev \
+docker run --restart unless-stopped --runtime=nvidia --privileged -itd -u root --gpus all -v /dev:/dev \
             --volume=$XSOCK:$XSOCK:rw \
             --volume=$XAUTH:$XAUTH:rw \
             --volume=$HOME:$HOME \
